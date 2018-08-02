@@ -35,13 +35,14 @@ namespace Realms
     public abstract class RealmCollectionBase<T>
         : NotificationsHelper.INotifiable,
           IRealmCollection<T>,
+          IList,
           ISchemaSource,
           IThreadConfined
     {
         protected static readonly PropertyType _argumentType = PropertyTypeEx.ToPropertyType(typeof(T), out _);
 
         private readonly List<NotificationCallbackDelegate<T>> _callbacks = new List<NotificationCallbackDelegate<T>>();
-
+        object IList.this[int index] { get => this[index]; set => throw new NotSupportedException(); }
         internal readonly RealmObject.Metadata Metadata;
 
         private NotificationTokenHandle _notificationToken;
